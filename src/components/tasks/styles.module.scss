@@ -1,0 +1,109 @@
+.taskContainer {
+  margin: 7rem;
+  height: 100%;
+}
+
+.form {
+
+  label {
+    font-size: 1.5rem;
+  }
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+
+  input {
+    width: 85%;
+    padding: 8px;
+    border: none;
+    outline: none;
+
+    &::placeholder {
+      font-size: 1rem;
+    }
+  }
+
+  button {
+    padding: 8px 15px;
+    background-color: #a5b2da;
+    border: none;
+    color: #000000;
+    font-size: 1rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    border-radius: 5px;
+  }
+
+  button:hover {
+    background-color: #c2d2ff;
+  }
+}
+
+.taskList {
+  background-color: #fff;
+  margin-top: 2rem;
+  accent-color: #a5b2da;
+
+  li {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #a5b2da;
+    gap: 0.5rem;
+    padding: 0.5rem;
+
+    input {
+      height: 2rem;
+      width: 1.5rem;
+    }
+
+    label {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  width: 7%;
+  font-size: 0.5rem;
+  color: #a5b2da;
+  font-weight: bold;
+}
+
+.actions {
+  margin-left: auto;
+  display: flex;
+  justify-content: center;
+
+  button {
+    padding: 6px 10px;
+    background-color: #a5b2da;
+    border: none;
+    color: #000000;
+    cursor: pointer;
+    text-transform: uppercase;
+    border-radius: 5px;
+  }
+
+  button:hover {
+    background-color: #c2d2ff;
+  }
+}
+
+.done {
+  text-decoration: line-through;
+  color: #a5b2da;
+}
+
+@media (max-width: 768px) {
+  .taskContainer {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    margin: 2rem auto;
+  }
+}

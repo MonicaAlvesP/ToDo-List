@@ -1,0 +1,48 @@
+.headerTodo {
+  background-image: url('https://cdn.pixabay.com/photo/2016/06/02/02/33/triangles-1430105_1280.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.container {
+  color: #e8f3fc;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 1rem;
+}
+
+.title {
+  font-size: 2rem;
+  text-shadow: 2px 2px 2px #000000;
+}
+
+.welcome {
+  font-size: 1rem;
+}
+
+.card_content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  transform: translateY(50%);
+}
+
+.buttonNameChange {
+  background-color: #f5f5f5;
+  color: #000;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .headerTodo {
+    margin-bottom: 5rem;
+  }
+  .container {
+    flex-direction: column;
+  }
+}
