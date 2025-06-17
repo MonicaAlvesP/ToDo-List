@@ -1,36 +1,32 @@
-# 📝 Lista de Tarefas 
+# 🛒 Lista de Compras
 
-Este é um projeto de lista de tarefas (To-Do List) desenvolvido em React. O objetivo deste projeto é permitir que os usuários adicionem, removam e marquem tarefas como concluídas. O projeto também utiliza o Context API para gerenciar o estado global das tarefas.
+Este é um projeto de **Lista de Compras** desenvolvido em React. O objetivo deste projeto é permitir que os usuários adicionem, removam e marquem itens como comprados. O projeto utiliza Context API para gerenciar o estado global dos itens e oferece uma interface moderna e responsiva.
 
 ## ✨ Funcionalidades
 
-- Adicionar novas tarefas
-- Remover tarefas existentes
-- Marcar tarefas como concluídas
-- Exibir estatísticas de tarefas (total, pendentes e concluídas)
-- Salvar o nome do usuário e as tarefas no `localStorage`
-- Interface responsiva
+- Adicionar novos itens à lista de compras.
+- Remover itens existentes.
+- Marcar itens como comprados.
+- Exportar a lista de compras para um arquivo CSV.
+- Exibir estatísticas da lista (total de itens, pendentes e comprados).
+- Interface responsiva para dispositivos móveis e desktops.
 
 ## 🛠️ Tecnologias Utilizadas
 
-- React
-- TypeScript
-- Context API
-- SCSS
+- **React**: Biblioteca para construção de interfaces de usuário.
+- **TypeScript**: Superset do JavaScript para tipagem estática.
+- **Context API**: Gerenciamento de estado global.
+- **SCSS**: Estilização modular e reutilizável.
 
-## 📂 Estrutura de pastas
+## 📂 Estrutura de Pastas
 
 - **/src**: Contém todo o código-fonte do projeto.
-  - **/components**: Contém os componentes React utilizados na aplicação (header, statsCard, tasks).
-  - **/context**: Pasta dentro de components que contém o contexto utilizado para gerenciar o estado global das tarefas.
-  - **/styles**: Contém o arquivo de estilo Global da aplicação.
+  - **/components**: Componentes React utilizados na aplicação (header, statsCard, tasks).
+  - **/context**: Contexto utilizado para gerenciar o estado global dos itens.
+  - **/styles**: Estilos globais e modulares da aplicação.
   - **App.tsx**: Componente principal da aplicação.
 
-  #### Observação
-
-  Cada componente possui seu próprio estilo modular, com arquivos SASS dedicados.
----
-
+Cada componente possui seu próprio estilo modular, com arquivos SCSS dedicados.
 
 ## ⚙️ Instalação
 
@@ -54,26 +50,24 @@ Este é um projeto de lista de tarefas (To-Do List) desenvolvido em React. O obj
 ## 🚀 Uso
 
 1. Abra o navegador e acesse `http://localhost:3000`.
-2. Adicione novas tarefas usando o campo de entrada e o botão "Adicionar".
-3. Marque tarefas como concluídas clicando na caixa de seleção ao lado de cada tarefa.
-4. Remova tarefas clicando no botão "Remover".
-5. Veja as estatísticas das tarefas no cabeçalho.
-6. Mude o nome do usuário clicando no botão "Mudar Nome" e inserindo um novo nome.
+2. Adicione novos itens à lista usando o campo de entrada e o botão "Adicionar".
+3. Marque itens como comprados clicando na caixa de seleção ao lado de cada item.
+4. Remova itens clicando no botão "Remover".
+5. Exporte a lista para um arquivo CSV clicando no botão "Exportar para CSV".
+6. Veja as estatísticas da lista no cabeçalho.
 
 ## 📸 Demonstração
 
 Veja abaixo uma imagem do projeto em funcionamento:
 
-| ![To-Do List em funcionamento](/src/assets/Macbook-Air-localhost.png) | ![To-Do List em funcionamento](/src/assets/Xiaomi-Mi-11i-localhost.png) |
-|:---------------------------------------------------------------------:|:------------------------------------------------------------------------:|
-| Desktop                                                               | Mobile                                                                   |
-
+| ![Lista de Compras em funcionamento](/src/assets/Macbook-Air-localhost.png) | ![Lista de Compras em funcionamento](/src/assets/Xiaomi-Mi-11i-localhost.png) |
+|:---------------------------------------------------------------------------:|:----------------------------------------------------------------------------:|
+| Desktop                                                                     | Mobile                                                                      |
 
 ## 🤝 Contribuição
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou enviar um pull request.
 
+---
 
 Feito com ❤️ por [MA](https://github.com/MonicaAlvesP).
-
-
