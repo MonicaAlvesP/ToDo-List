@@ -1,12 +1,12 @@
-import { TasksProvider } from "./components/context/TasksContext";
+import { ShoppingProvider } from "./components/context/TasksContext";
 import { Header } from "./components/header";
-import { Tasks } from "./components/tasks";
+import { ShoppingList } from "./components/tasks";
 
 export default function App() {
   return (
-    <TasksProvider>
+    <ShoppingProvider>
       <Header />
-      <Tasks />
-    </TasksProvider>
-  )
+      <ShoppingList />
+    </ShoppingProvider>
+  );
 }

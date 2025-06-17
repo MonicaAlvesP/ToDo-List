@@ -1,33 +1,29 @@
 .stats_card {
-  background-color: #ffd865;
-  color: #040404;
-  height: 20vh;
-  width: 22vw;
+  background: #fff;
+  color: #4a148c;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  gap: 0.5rem;
 
   h2 {
-    font-size: 1.3rem;
-    font-weight: 500;
+    font-size: 1.2rem;
+    font-weight: 600;
   }
-  
+
   span {
-    font-size: 3rem;
-    font-weight: 300;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #7b1fa2;
   }
 }
 
 @media (max-width: 768px) {
   .stats_card {
-    width: 30vw;
-    height: 15vh;
-
-    h2 {
-      font-size: 1rem;
-    }
+    width: 100%;
   }
 }

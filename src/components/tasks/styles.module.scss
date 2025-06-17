@@ -1,109 +1,107 @@
 .taskContainer {
-  margin: 7rem;
-  height: 100%;
+  margin: 2rem auto;
+  width: 90%;
+  max-width: 800px;
 }
 
 .form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
 
   label {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #4a148c;
   }
-}
 
-.content {
-  display: flex;
-  justify-content: space-between;
+  .content {
+    display: flex;
+    gap: 1rem;
 
-  input {
-    width: 85%;
-    padding: 8px;
-    border: none;
-    outline: none;
-
-    &::placeholder {
+    input {
+      flex: 1;
+      padding: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
       font-size: 1rem;
     }
-  }
 
-  button {
-    padding: 8px 15px;
-    background-color: #a5b2da;
-    border: none;
-    color: #000000;
-    font-size: 1rem;
-    cursor: pointer;
-    text-transform: uppercase;
-    border-radius: 5px;
-  }
+    button {
+      background: #7b1fa2;
+      color: #fff;
+      padding: 0.8rem 1.5rem;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
 
-  button:hover {
-    background-color: #c2d2ff;
+    button:hover {
+      background: #4a148c;
+    }
   }
 }
 
 .taskList {
-  background-color: #fff;
-  margin-top: 2rem;
-  accent-color: #a5b2da;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 
   li {
+    background: #fff;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
-    font-size: 1.2rem;
-    border-bottom: 1px solid #a5b2da;
-    gap: 0.5rem;
-    padding: 0.5rem;
-
-    input {
-      height: 2rem;
-      width: 1.5rem;
-    }
+    justify-content: space-between;
 
     label {
-      font-size: 1.2rem;
+      font-size: 1rem;
+      flex: 1;
+      margin-left: 1rem;
+      color: #4a148c;
+    }
+
+    .actions {
+      display: flex;
+      gap: 0.5rem;
+
+      button {
+        background: #7b1fa2;
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+      }
+
+      button:hover {
+        background: #4a148c;
+      }
     }
   }
-}
 
-.info {
-  display: flex;
-  justify-content: space-between;
-  width: 7%;
-  font-size: 0.5rem;
-  color: #a5b2da;
-  font-weight: bold;
-}
-
-.actions {
-  margin-left: auto;
-  display: flex;
-  justify-content: center;
-
-  button {
-    padding: 6px 10px;
-    background-color: #a5b2da;
-    border: none;
-    color: #000000;
-    cursor: pointer;
-    text-transform: uppercase;
-    border-radius: 5px;
-  }
-
-  button:hover {
-    background-color: #c2d2ff;
+  .done {
+    text-decoration: line-through;
+    color: #aaa;
   }
 }
 
-.done {
-  text-decoration: line-through;
-  color: #a5b2da;
+.exportButton {
+  margin-top: 1rem;
+  padding: 8px 15px;
+  background-color: #7b1fa2;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  border-radius: 5px;
 }
 
-@media (max-width: 768px) {
-  .taskContainer {
-    width: 90%;
-    display: flex;
-    flex-direction: column;
-    margin: 2rem auto;
-  }
+.exportButton:hover {
+  background-color: #4a148c;
 }

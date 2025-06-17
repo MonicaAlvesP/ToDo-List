@@ -1,37 +1,36 @@
 import { createContext, useEffect, useState } from "react";
 
-export interface TaskProps {
+export interface ShoppingItemProps {
   title: string;
   done: boolean;
   id: number;
 }
 
-interface TasksContextData {
-  tasks: TaskProps[]
-  setTasks: React.Dispatch<React.SetStateAction<TaskProps[]>>
+interface ShoppingContextData {
+  items: ShoppingItemProps[];
+  setItems: React.Dispatch<React.SetStateAction<ShoppingItemProps[]>>;
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const TasksContext = createContext({} as TasksContextData);
+export const ShoppingContext = createContext({} as ShoppingContextData);
 
-interface TasksProviderProps {
-  children: React.ReactNode; // ReactNode é um tipo de dado que aceita qualquer coisa que o React possa renderizar
+interface ShoppingProviderProps {
+  children: React.ReactNode;
 }
 
-export const TasksProvider: React.FC<TasksProviderProps> = ({ children }) => {
-
-  const [tasks, setTasks] = useState<TaskProps[]>([]);
+export const ShoppingProvider: React.FC<ShoppingProviderProps> = ({ children }) => {
+  const [items, setItems] = useState<ShoppingItemProps[]>([]);
 
   useEffect(() => {
-    const storagedTasks = localStorage.getItem('tasks');
-    if (storagedTasks) {
-      setTasks(JSON.parse(storagedTasks));
+    const storedItems = localStorage.getItem('shoppingItems');
+    if (storedItems) {
+      setItems(JSON.parse(storedItems));
     }
   }, []);
 
   return (
-    <TasksContext.Provider value={{ tasks, setTasks }}>
+    <ShoppingContext.Provider value={{ items, setItems }}>
       {children}
-    </TasksContext.Provider>
+    </ShoppingContext.Provider>
   );
-}; 
+};

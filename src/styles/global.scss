@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
 
 html {
   scroll-behavior: smooth;
@@ -13,6 +13,13 @@ html {
 }
 
 body {
-  background-color: #ececec;
-  font-family: 'Cairo', sans-serif;
+  background: linear-gradient(135deg, #f3e8ff, #d3b3ff);
+  font-family: 'Inter', sans-serif;
+  color: #4a148c;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
 }

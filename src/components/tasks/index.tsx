@@ -1,98 +1,110 @@
 import React, { FormEvent, useContext, useState, useEffect } from 'react';
 import s from './styles.module.scss';
-import { TasksContext } from '../context/TasksContext';
+import { ShoppingContext } from '../context/TasksContext';
 
-export const Tasks: React.FC = () => {
-  const [taskTitle, setTaskTitle] = useState('');
-  const { tasks, setTasks } = useContext(TasksContext);
+export const ShoppingList: React.FC = () => {
+  const [itemTitle, setItemTitle] = useState('');
+  const { items, setItems } = useContext(ShoppingContext);
 
   useEffect(() => {
-    const storedTasks = localStorage.getItem('tasks');
-    if (storedTasks) {
-      setTasks(JSON.parse(storedTasks));
+    const storedItems = localStorage.getItem('shoppingItems');
+    if (storedItems) {
+      setItems(JSON.parse(storedItems));
     }
-  }, [setTasks]);
+  }, [setItems]);
 
-  function handleSubmitAddTask(e: FormEvent) {
+  function handleSubmitAddItem(e: FormEvent) {
     e.preventDefault();
 
-    if (taskTitle.length < 3) {
-      alert('O título da tarefa deve ter no mínimo 3 caracteres');
+    if (itemTitle.length < 3) {
+      alert('O nome do item deve ter no mínimo 3 caracteres');
       return;
     }
 
-    const newTasks = [
-      ...tasks,
+    const newItems = [
+      ...items,
       {
-        title: taskTitle,
+        title: itemTitle,
         done: false,
         id: new Date().getTime()
       }
     ];
-    setTasks(newTasks);
-    localStorage.setItem('tasks', JSON.stringify(newTasks));
+    setItems(newItems);
+    localStorage.setItem('shoppingItems', JSON.stringify(newItems));
 
-    setTaskTitle('');
+    setItemTitle('');
   }
 
-  const handleTaskCheck = (taskId: number) => {
-    const newTasks = tasks.map(task => {
-      if (task.id === taskId) {
+  const handleItemCheck = (itemId: number) => {
+    const newItems = items.map(item => {
+      if (item.id === itemId) {
         return {
-          ...task,
-          done: !task.done
+          ...item,
+          done: !item.done
         };
       }
-      return task;
+      return item;
     });
-    setTasks(newTasks);
-    localStorage.setItem('tasks', JSON.stringify(newTasks));
+    setItems(newItems);
+    localStorage.setItem('shoppingItems', JSON.stringify(newItems));
   };
 
-  const handleRemoveTask = (id: number) => {
-    const newTasks = tasks.filter(task => task.id !== id);
-    setTasks(newTasks);
-    localStorage.setItem('tasks', JSON.stringify(newTasks));
+  const handleRemoveItem = (id: number) => {
+    const newItems = items.filter(item => item.id !== id);
+    setItems(newItems);
+    localStorage.setItem('shoppingItems', JSON.stringify(newItems));
+  };
+
+  const handleExportCSV = () => {
+    const csvContent = "data:text/csv;charset=utf-8," +
+      items.map(item => `${item.title},${item.done ? 'Concluído' : 'Pendente'}`).join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "lista_de_compras.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
     <section className={s.taskContainer}>
-      <form className={s.form} onSubmit={handleSubmitAddTask}>
-        <label htmlFor="task-title">Adicionar Tarefa</label>
+      <form className={s.form} onSubmit={handleSubmitAddItem}>
+        <label htmlFor="item-title">Adicionar Item</label>
         <div className={s.content}>
           <input
-            value={taskTitle}
-            onChange={(e) => setTaskTitle(e.target.value)}
+            value={itemTitle}
+            onChange={(e) => setItemTitle(e.target.value)}
             type="text"
-            id="task-title"
-            placeholder='Titulo da Tarefa'
+            id="item-title"
+            placeholder='Nome do Item'
           />
-          <button type='submit'>adicionar</button>
+          <button type='submit'>Adicionar</button>
         </div>
       </form>
 
+      <button onClick={handleExportCSV} className={s.exportButton}>
+        Exportar para CSV
+      </button>
+
       <ul className={s.taskList}>
-        {tasks.map(task => (
-          <li key={task.id}>
+        {items.map(item => (
+          <li key={item.id}>
             <input
               type="checkbox"
-              name='task'
-              id={`task-${task.id}`}
-              checked={task.done}
-              onChange={() => handleTaskCheck(task.id)}
+              name='item'
+              id={`item-${item.id}`}
+              checked={item.done}
+              onChange={() => handleItemCheck(item.id)}
             />
             <label
-              htmlFor={`task-${task.id}`}
-              className={task.done ? s.done : ""}
+              htmlFor={`item-${item.id}`}
+              className={item.done ? s.done : ""}
             >
-              {task.title}
+              {item.title}
             </label>
-            <div className={s.info}>
-              <span>{new Date(task.id).toLocaleDateString()}</span>
-              <span>{new Date(task.id).toLocaleTimeString()}</span>
-            </div>
             <div className={s.actions}>
-              <button onClick={() => handleRemoveTask(task.id)}>remover</button>
+              <button onClick={() => handleRemoveItem(item.id)}>Remover</button>
             </div>
           </li>
         ))}

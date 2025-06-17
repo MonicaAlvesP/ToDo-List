@@ -1,57 +1,38 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { StatsCard } from '../statsCard';
 import s from './styles.module.scss';
-import { TasksContext } from '../context/TasksContext';
+import { ShoppingContext } from '../context/TasksContext';
 
 export const Header: React.FC = () => {
-  const { tasks } = useContext(TasksContext);
-  const [userName, setUserName] = useState(() => {
-    return localStorage.getItem('userName') || 'Mônica';
-  });
+  const { items } = useContext(ShoppingContext);
 
-  useEffect(() => {
-    localStorage.setItem('userName', userName);
-  }, [userName]);
-
-  const totalTasks = tasks.length;
-  const totalPending = tasks.reduce((total: number, task: { done: boolean }) => {
-    if (!task.done) {
+  const totalItems = items.length;
+  const totalPending = items.reduce((total: number, item: { done: boolean }) => {
+    if (!item.done) {
       return total + 1;
     }
     return total;
   }, 0);
 
-  const totalCompleted = totalTasks - totalPending;
-
-  const handleNameChange = () => {
-    const name = prompt('Por favor, insira seu nome:');
-    if (name) {
-      setUserName(name);
-    }
-  };
+  const totalCompleted = totalItems - totalPending;
 
   return (
     <header className={s.headerTodo}>
       <div className={s.container}>
-        <h1 className={s.title}>Lista de Tarefas</h1>
-        <span className={s.welcome}>Bem Vinda(o), {userName}!</span>
-        <button
-          onClick={handleNameChange}
-          className={s.buttonNameChange}
-        >Mudar Nome</button>
+        <h1 className={s.title}>Lista de Compras</h1>
       </div>
 
       <section className={s.card_content}>
         <StatsCard
-          title="Total de Tarefas"
-          value={totalTasks}
+          title="Total de Itens"
+          value={totalItems}
         />
         <StatsCard
           title="Pendentes"
           value={totalPending}
         />
         <StatsCard
-          title="Concluídas"
+          title="Concluídos"
           value={totalCompleted}
         />
       </section>
