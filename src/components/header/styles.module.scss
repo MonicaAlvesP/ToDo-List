@@ -1,9 +1,8 @@
 .headerTodo {
-  background: linear-gradient(90deg, #7b1fa2, #4a148c);
+  background: #1E1E1E;
   color: #fff;
-  padding: 2rem 1rem;
-  text-align: center;
-  border-radius: 0 0 20px 20px;
+  height: 35vh;
+  padding: 2rem 0;
 }
 
 .container {
@@ -14,15 +13,24 @@
 }
 
 .title {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   margin-bottom: 2rem;
 }
 
 .card_content {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
-  margin-top: 2rem;
-  gap: 1rem;
+  height: 30vh;
+}
+
+@media (max-width: 768px) {
+  .headerTodo {
+    height: 25vh;
+  }
+
+  .card_content {
+    height: 18vh;
+  }
 }

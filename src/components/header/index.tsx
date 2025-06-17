@@ -7,14 +7,14 @@ export const Header: React.FC = () => {
   const { items } = useContext(ShoppingContext);
 
   const totalItems = items.length;
-  const totalPending = items.reduce((total: number, item: { done: boolean }) => {
+  const totalAdded = items.reduce((total: number, item: { done: boolean }) => {
     if (!item.done) {
       return total + 1;
     }
     return total;
   }, 0);
 
-  const totalCompleted = totalItems - totalPending;
+  const totalPicked = totalItems - totalAdded;
 
   return (
     <header className={s.headerTodo}>
@@ -28,12 +28,12 @@ export const Header: React.FC = () => {
           value={totalItems}
         />
         <StatsCard
-          title="Pendentes"
-          value={totalPending}
+          title="Adicionados"
+          value={totalAdded}
         />
         <StatsCard
-          title="Concluídos"
-          value={totalCompleted}
+          title="Pegos"
+          value={totalPicked}
         />
       </section>
     </header>

@@ -83,9 +83,6 @@ export const ShoppingList: React.FC = () => {
         </div>
       </form>
 
-      <button onClick={handleExportCSV} className={s.exportButton}>
-        Exportar para CSV
-      </button>
 
       <ul className={s.taskList}>
         {items.map(item => (
@@ -109,6 +106,9 @@ export const ShoppingList: React.FC = () => {
           </li>
         ))}
       </ul>
+      <button onClick={handleExportCSV} className={s.exportButton}>
+        Exportar para CSV
+      </button>
     </section>
   );
 };

@@ -13,9 +13,12 @@ html {
 }
 
 body {
-  background: linear-gradient(135deg, #f3e8ff, #d3b3ff);
+  background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), url("../assets/supermarket.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   font-family: 'Inter', sans-serif;
-  color: #4a148c;
 }
 
 button {
