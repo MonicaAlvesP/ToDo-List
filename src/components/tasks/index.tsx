@@ -4,6 +4,7 @@ import { ShoppingContext } from '../context/TasksContext';
 
 export const ShoppingList: React.FC = () => {
   const [itemTitle, setItemTitle] = useState('');
+  const [importText, setImportText] = useState('');
   const { items, setItems } = useContext(ShoppingContext);
 
   useEffect(() => {
@@ -67,6 +68,22 @@ export const ShoppingList: React.FC = () => {
     document.body.removeChild(link);
   };
 
+  const handleImportText = () => {
+    if (!importText.trim()) return;
+    
+    const lines = importText.split('\n').filter(line => line.trim());
+    const newItems = lines.map(line => ({
+      title: line.trim(),
+      done: false,
+      id: new Date().getTime() + Math.random()
+    }));
+    
+    const updatedItems = [...items, ...newItems];
+    setItems(updatedItems);
+    localStorage.setItem('shoppingItems', JSON.stringify(updatedItems));
+    setImportText('');
+  };
+
   return (
     <section className={s.taskContainer}>
       <form className={s.form} onSubmit={handleSubmitAddItem}>
@@ -83,6 +100,19 @@ export const ShoppingList: React.FC = () => {
         </div>
       </form>
 
+      <div className={s.importSection}>
+        <label htmlFor="import-text">Importar Lista</label>
+        <textarea
+          id="import-text"
+          value={importText}
+          onChange={(e) => setImportText(e.target.value)}
+          placeholder="Cole sua lista aqui (um item por linha)"
+          rows={4}
+        />
+        <button onClick={handleImportText} className={s.importButton}>
+          Importar
+        </button>
+      </div>
 
       <ul className={s.taskList}>
         {items.map(item => (
