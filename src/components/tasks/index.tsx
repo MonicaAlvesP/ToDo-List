@@ -71,9 +71,9 @@ export const ShoppingList: React.FC = () => {
   const handleImportText = () => {
     if (!importText.trim()) return;
     
-    const lines = importText.split('\n').filter(line => line.trim());
-    const newItems = lines.map(line => ({
-      title: line.trim(),
+    const items_list = importText.split(/[\n,]/).filter(item => item.trim());
+    const newItems = items_list.map(item => ({
+      title: item.trim().charAt(0).toUpperCase() + item.trim().slice(1).toLowerCase(),
       done: false,
       id: new Date().getTime() + Math.random()
     }));
@@ -106,7 +106,7 @@ export const ShoppingList: React.FC = () => {
           id="import-text"
           value={importText}
           onChange={(e) => setImportText(e.target.value)}
-          placeholder="Cole sua lista aqui (um item por linha)"
+          placeholder="Cole sua lista aqui (separado por vírgula ou linha)"
           rows={4}
         />
         <button onClick={handleImportText} className={s.importButton}>
@@ -116,7 +116,7 @@ export const ShoppingList: React.FC = () => {
 
       <ul className={s.taskList}>
         {items.map(item => (
-          <li key={item.id}>
+          <li key={item.id} className={item.done ? s.checked : ''}>
             <input
               type="checkbox"
               name='item'
