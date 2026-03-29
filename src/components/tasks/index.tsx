@@ -1,10 +1,12 @@
-import React, { FormEvent, useContext, useState, useEffect } from 'react';
+import React, { FormEvent, useContext, useState, useEffect, useRef } from 'react';
 import s from './styles.module.scss';
 import { ShoppingContext } from '../context/TasksContext';
+import { parseShoppingCsv } from '../../utils/csv';
+import { exportShoppingListPdf } from '../../utils/shoppingListPdf';
 
 export const ShoppingList: React.FC = () => {
   const [itemTitle, setItemTitle] = useState('');
-  const [importText, setImportText] = useState('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const { items, setItems } = useContext(ShoppingContext);
 
   useEffect(() => {
@@ -27,8 +29,8 @@ export const ShoppingList: React.FC = () => {
       {
         title: itemTitle,
         done: false,
-        id: new Date().getTime()
-      }
+        id: new Date().getTime(),
+      },
     ];
     setItems(newItems);
     localStorage.setItem('shoppingItems', JSON.stringify(newItems));
@@ -37,11 +39,11 @@ export const ShoppingList: React.FC = () => {
   }
 
   const handleItemCheck = (itemId: number) => {
-    const newItems = items.map(item => {
+    const newItems = items.map((item) => {
       if (item.id === itemId) {
         return {
           ...item,
-          done: !item.done
+          done: !item.done,
         };
       }
       return item;
@@ -51,94 +53,143 @@ export const ShoppingList: React.FC = () => {
   };
 
   const handleRemoveItem = (id: number) => {
-    const newItems = items.filter(item => item.id !== id);
+    const newItems = items.filter((item) => item.id !== id);
     setItems(newItems);
     localStorage.setItem('shoppingItems', JSON.stringify(newItems));
   };
 
-  const handleExportCSV = () => {
-    const csvContent = "data:text/csv;charset=utf-8," +
-      items.map(item => `${item.title},${item.done ? 'Concluído' : 'Pendente'}`).join("\n");
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "lista_de_compras.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const handleExportPDF = () => {
+    exportShoppingListPdf(
+      items.map((item) => ({ title: item.title, done: item.done }))
+    );
   };
 
-  const handleImportText = () => {
-    if (!importText.trim()) return;
-    
-    const items_list = importText.split(/[\n,]/).filter(item => item.trim());
-    const newItems = items_list.map(item => ({
-      title: item.trim().charAt(0).toUpperCase() + item.trim().slice(1).toLowerCase(),
-      done: false,
-      id: new Date().getTime() + Math.random()
-    }));
-    
-    const updatedItems = [...items, ...newItems];
-    setItems(updatedItems);
-    localStorage.setItem('shoppingItems', JSON.stringify(updatedItems));
-    setImportText('');
+  const handleCsvFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const text = typeof reader.result === 'string' ? reader.result : '';
+      const parsed = parseShoppingCsv(text);
+      if (parsed.length === 0) {
+        alert('Nenhum item válido encontrado no CSV.');
+        e.target.value = '';
+        return;
+      }
+
+      const base = Date.now();
+      const newItems = parsed.map((p, idx) => ({
+        ...p,
+        id: base + idx,
+      }));
+
+      const updatedItems = [...items, ...newItems];
+      setItems(updatedItems);
+      localStorage.setItem('shoppingItems', JSON.stringify(updatedItems));
+      e.target.value = '';
+    };
+    reader.onerror = () => {
+      alert('Não foi possível ler o arquivo.');
+      e.target.value = '';
+    };
+    reader.readAsText(file, 'UTF-8');
   };
+
+  const triggerCsvPicker = () => fileInputRef.current?.click();
 
   return (
     <section className={s.taskContainer}>
       <form className={s.form} onSubmit={handleSubmitAddItem}>
-        <label htmlFor="item-title">Adicionar Item</label>
+        <label htmlFor="item-title">Adicionar item</label>
         <div className={s.content}>
           <input
             value={itemTitle}
             onChange={(e) => setItemTitle(e.target.value)}
             type="text"
             id="item-title"
-            placeholder='Nome do Item'
+            placeholder="Nome do Item"
           />
-          <button type='submit'>Adicionar</button>
+          <button type="submit">Adicionar</button>
         </div>
       </form>
 
+      <div className={s.divider} aria-hidden />
+
       <div className={s.importSection}>
-        <label htmlFor="import-text">Importar Lista</label>
-        <textarea
-          id="import-text"
-          value={importText}
-          onChange={(e) => setImportText(e.target.value)}
-          placeholder="Cole sua lista aqui (separado por vírgula ou linha)"
-          rows={4}
+        <label htmlFor="csv-file-input">Importar CSV</label>
+        <p className={s.importHint}>
+          Arquivo .csv: uma coluna com o nome do item, ou duas colunas (item e status:
+          Pendente / Concluido).
+        </p>
+        <input
+          ref={fileInputRef}
+          id="csv-file-input"
+          type="file"
+          accept=".csv,text/csv"
+          className={s.hiddenFileInput}
+          onChange={handleCsvFile}
         />
-        <button onClick={handleImportText} className={s.importButton}>
-          Importar
-        </button>
+        <div className={s.importRow}>
+          <button type="button" onClick={triggerCsvPicker} className={s.importButton}>
+            Selecionar arquivo .csv
+          </button>
+        </div>
       </div>
 
-      <ul className={s.taskList}>
-        {items.map(item => (
-          <li key={item.id} className={item.done ? s.checked : ''}>
-            <input
-              type="checkbox"
-              name='item'
-              id={`item-${item.id}`}
-              checked={item.done}
-              onChange={() => handleItemCheck(item.id)}
-            />
-            <label
-              htmlFor={`item-${item.id}`}
-              className={item.done ? s.done : ""}
-            >
-              {item.title}
-            </label>
-            <div className={s.actions}>
-              <button onClick={() => handleRemoveItem(item.id)}>Remover</button>
-            </div>
-          </li>
-        ))}
-      </ul>
-      <button onClick={handleExportCSV} className={s.exportButton}>
-        Exportar para CSV
-      </button>
+      <div className={s.listHeader}>
+        <span className={s.listTitle}>Itens</span>
+        {items.length > 0 && (
+          <span className={s.listMeta}>
+            {items.filter((i) => i.done).length} de {items.length} pegos
+          </span>
+        )}
+      </div>
+
+      {items.length === 0 ? (
+        <div className={s.emptyState}>
+          <p>
+            <strong>Nenhum item ainda</strong>
+            Adicione acima ou importe um CSV para começar.
+          </p>
+        </div>
+      ) : (
+        <ul className={s.taskList}>
+          {items.map((item) => (
+            <li key={item.id} className={item.done ? s.checked : ''}>
+              <input
+                type="checkbox"
+                name="item"
+                id={`item-${item.id}`}
+                checked={item.done}
+                onChange={() => handleItemCheck(item.id)}
+              />
+              <label
+                htmlFor={`item-${item.id}`}
+                className={item.done ? s.done : ''}
+              >
+                {item.title}
+              </label>
+              <div className={s.actions}>
+                <button type="button" onClick={() => handleRemoveItem(item.id)}>
+                  Remover
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <div className={s.footerActions}>
+        <button
+          type="button"
+          onClick={handleExportPDF}
+          className={s.exportButton}
+          disabled={items.length === 0}
+        >
+          Exportar PDF
+        </button>
+      </div>
     </section>
   );
 };

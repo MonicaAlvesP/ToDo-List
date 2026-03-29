@@ -18,24 +18,19 @@ export const Header: React.FC = () => {
 
   return (
     <header className={s.headerTodo}>
-      <div className={s.container}>
+      <div className={s.inner}>
+        <p className={s.eyebrow}>Organize sua ida ao mercado</p>
         <h1 className={s.title}>Lista de Compras</h1>
-      </div>
+        <p className={s.subtitle}>
+          Marque o que já pegou, importe uma lista rápida e acompanhe o progresso.
+        </p>
 
-      <section className={s.card_content}>
-        <StatsCard
-          title="Total de Itens"
-          value={totalItems}
-        />
-        <StatsCard
-          title="Adicionados"
-          value={totalAdded}
-        />
-        <StatsCard
-          title="Pegos"
-          value={totalPicked}
-        />
-      </section>
+        <section className={s.card_content} aria-label="Resumo da lista">
+          <StatsCard title="Total de Itens" value={totalItems} />
+          <StatsCard title="Adicionados" value={totalAdded} />
+          <StatsCard title="Pegos" value={totalPicked} />
+        </section>
+      </div>
     </header>
   );
 };

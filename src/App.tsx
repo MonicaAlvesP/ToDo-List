@@ -5,8 +5,12 @@ import { ShoppingList } from "./components/tasks";
 export default function App() {
   return (
     <ShoppingProvider>
-      <Header />
-      <ShoppingList />
+      <div className="app-layout">
+        <Header />
+        <main className="app-main">
+          <ShoppingList />
+        </main>
+      </div>
     </ShoppingProvider>
   );
 }

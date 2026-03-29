@@ -9,7 +9,7 @@ export const StatsCard: React.FC<StatsCardProps> = ({ title, value }) => {
   return (
     <article className={s.stats_card}>
       <h2>{title}</h2>
-      <span>{value}</span>
+      <span aria-label={`${title}: ${value}`}>{value}</span>
     </article>
-  )
-}
+  );
+};

@@ -1,36 +1,77 @@
 .headerTodo {
-  background: #1E1E1E;
-  color: #fff;
-  height: 35vh;
-  padding: 2rem 0;
+  background: linear-gradient(
+    168deg,
+    var(--color-header) 0%,
+    var(--color-header-elevated) 50%,
+    var(--color-header-glow) 100%
+  );
+  color: var(--color-text);
+  padding: clamp(1.25rem, 4vw, 2rem) var(--space-page) clamp(1.75rem, 5vw, 2.75rem);
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 75% 55% at 90% -25%, rgba(167, 139, 250, 0.18), transparent 52%),
+      radial-gradient(ellipse 55% 45% at 8% 110%, rgba(34, 211, 238, 0.06), transparent 48%);
+    pointer-events: none;
+  }
 }
 
-.container {
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 960px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: clamp(1rem, 3vw, 1.75rem);
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
 }
 
 .title {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 2rem;
+  font-size: clamp(1.65rem, 4vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-align: center;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  max-width: 28rem;
+  margin: -0.25rem 0 0;
+  font-weight: 400;
 }
 
 .card_content {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  height: 30vh;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.75rem, 2.5vw, 1.25rem);
+  width: 100%;
+  max-width: 720px;
+  margin-top: 0.25rem;
 }
 
-@media (max-width: 768px) {
-  .headerTodo {
-    height: 25vh;
-  }
-
+@media (max-width: 640px) {
   .card_content {
-    height: 18vh;
+    grid-template-columns: 1fr;
+    max-width: 320px;
   }
 }
