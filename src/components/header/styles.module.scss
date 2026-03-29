@@ -71,7 +71,8 @@
 
 @media (max-width: 640px) {
   .card_content {
-    grid-template-columns: 1fr;
-    max-width: 320px;
+    max-width: 100%;
+    gap: 0.35rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
